@@ -24,7 +24,7 @@
 		if(!stabilizer.stab) return ;
 		trace(2,"Stabilizer : active");
 		local all_towns = GSTownList();
-		
+
 		foreach (town, _ in all_towns)
 		{
 			// save house count
@@ -38,6 +38,12 @@
 	function checkNoDecreasing(town,nbhouse)
 	{
 		if(!stabilizer.stab) return ;
+		if(!(town in stabilizer._houses))
+		{
+			// town not yet registered (e.g. crash recovery), register it now
+			stabilizer._houses[town] <- nbhouse;
+			return;
+		}
 		if(nbhouse<stabilizer._houses[town])
 		{ // we have less hous than previous
 			local newmaison=min(stabilizer._houses[town]-nbhouse,3); // max 3 new houses to create at once, no more

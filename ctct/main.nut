@@ -294,7 +294,7 @@ function MainClass::Save()
 		companies = comp_m.comp,     /* Companies */
 		towngoal = comp_m.goalval,   /* Company target for the owned town */
 		competegoal = comp_m.compete_goal, /* GSGoal id for the global Goal */
-		stab = stab_m._houses        /* Number of house, for the stabilizer */
+		stab = stab_m._houses,       /* Number of house, for the stabilizer */
 		tables = ltable_m.tables	 /* LeagueTables*/
 	};
 }

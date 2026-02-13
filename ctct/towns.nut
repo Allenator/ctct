@@ -290,26 +290,29 @@
 		// prepare le texte
 		local head=GSText((impact==0)? GSText.STR_TOWN_NOT : GSText.STR_TOWN_HEAD);
 		local txt=null;
-		switch(nblvl)
+		if(nblvl > 0 && nblvl <= 6)
 		{
-		case 1:
-			txt=GSText(GSText.STR_TOWN_L1,head,levelinfo[0],bonusMsg,bonus2Msg,totalhab); // 1 + (1+1) + (1+1) +1 = 6 param
-			break;
-		case 2:
-			txt=GSText(GSText.STR_TOWN_L2,head,levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab); // 1 + (1+1)*2 + (1+1) +1 = 8 param
-			break;
-		case 3:
-			txt=GSText(GSText.STR_TOWN_L3,head,levelinfo[2],levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab);
-			break;
-		case 4:
-			txt=GSText(GSText.STR_TOWN_L4,head,levelinfo[3],levelinfo[2],levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab);
-			break;
-		case 5:
-			txt=GSText(GSText.STR_TOWN_L5,head,levelinfo[4],levelinfo[3],levelinfo[2],levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab);
-			break;
-		case 6:
-			txt=GSText(GSText.STR_TOWN_L6,head,levelinfo[5],levelinfo[4],levelinfo[3],levelinfo[2],levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab);
-			break;
+			switch(nblvl)
+			{
+			case 1:
+				txt=GSText(GSText.STR_TOWN_L1,head,levelinfo[0],bonusMsg,bonus2Msg,totalhab); // 1 + (1+1) + (1+1) +1 = 6 param
+				break;
+			case 2:
+				txt=GSText(GSText.STR_TOWN_L2,head,levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab); // 1 + (1+1)*2 + (1+1) +1 = 8 param
+				break;
+			case 3:
+				txt=GSText(GSText.STR_TOWN_L3,head,levelinfo[2],levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab);
+				break;
+			case 4:
+				txt=GSText(GSText.STR_TOWN_L4,head,levelinfo[3],levelinfo[2],levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab);
+				break;
+			case 5:
+				txt=GSText(GSText.STR_TOWN_L5,head,levelinfo[4],levelinfo[3],levelinfo[2],levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab);
+				break;
+			case 6:
+				txt=GSText(GSText.STR_TOWN_L6,head,levelinfo[5],levelinfo[4],levelinfo[3],levelinfo[2],levelinfo[1],levelinfo[0],bonusMsg,bonus2Msg,totalhab);
+				break;
+			}
 		}
 
 		GSTown.SetText(town,txt);
@@ -324,12 +327,12 @@ function MakeTownGrowth(town,impact)
 		local habparmaison = (towns._avg_habparmaison + inhab/maisonact.tofloat())/2; // moyene hab/maison de la ville et de la carte complete
 		local need_maison=(impact-inhab)/habparmaison;
 		need_maison=max(need_maison.tointeger(),1); // nombre de maisons manquantes
-		
+
 		local vtss0=40.0/need_maison; // nombre de construction par mois. :a 80% - comme si on avait 40 jours par mois.
 		local vtss=vtss0.tointeger();
 		if(vtss<1) vtss=1;//fast, grow every day
 		if(vtss>40) vtss=40; // very slow
-		
+
 		GSTown.SetGrowthRate(town,vtss); //vtss = Set the amount of days between town growth
 		towns._traces <- towns._traces + "  Require "+(impact-inhab)+" inhab ("+need_maison+" houses), growthRate set to a new house every "+vtss+" day(s)";
 		trace(4,towns._traces);
@@ -375,7 +378,9 @@ function MakeTownGrowth(town,impact)
 		local div=towns._cargoDiv[cargo]; // divider for linear part
 		local rate=towns._cargoRate[cargo]; // gobal rate
 		local cst=100+(rate*10); // static linear boost
-		i=(log(del/5)*100+del/div)*rate*towns._cargosetRate; //log neper
+		local logarg = del/5.0; // use float division to avoid log(0)
+		if(logarg < 1.0) logarg = 1.0; // clamp to avoid negative log values dominating
+		i=(log(logarg)*100+del/div)*rate*towns._cargosetRate; //log neper
 		i=cst+i.tointeger();
 		if(i<1)
 		{
@@ -455,9 +460,12 @@ function MakeTownGrowth(town,impact)
 		{
 			// current goal is completed
 			local annee=GSDate.GetYear(GSDate.GetCurrentDate());
-			trace(3,"Update global cargo goal "+ towns._goals[towns._etape+1] +" towns reached, (year "+ annee +")...");
-			GSGoal.SetProgress(towns._goals[towns._etape+1],GSText(GSText.STR_GOAL_REACHED,annee));
-			GSGoal.SetCompleted(towns._goals[towns._etape+1],true);
+			if((towns._etape+1) in towns._goals)
+			{
+				trace(3,"Update global cargo goal "+ towns._goals[towns._etape+1] +" towns reached, (year "+ annee +")...");
+				GSGoal.SetProgress(towns._goals[towns._etape+1],GSText(GSText.STR_GOAL_REACHED,annee));
+				GSGoal.SetCompleted(towns._goals[towns._etape+1],true);
+			}
 			local added=def_m.getNextExtCargo();
 			//var_dump("ajout du cargo",added);
 			if(added.cargo!=-1)
@@ -472,7 +480,8 @@ function MakeTownGrowth(town,impact)
 		}
 		else
 		{
-			GSGoal.SetProgress(towns._goals[towns._etape+1],GSText(GSText.STR_GOAL_PROGRESS,(100*nbtown/nbtoreach).tointeger()));
+			if((towns._etape+1) in towns._goals)
+				GSGoal.SetProgress(towns._goals[towns._etape+1],GSText(GSText.STR_GOAL_PROGRESS,(100*nbtown/nbtoreach).tointeger()));
 			return false;
 		}
 	}

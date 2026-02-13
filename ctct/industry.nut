@@ -9,11 +9,11 @@
 	function delIndustry(indus)
 	{
 		if(!industriesMgr.etat) return;
-		local sign_id = industriesMgr.signs[indus]; // todo use "in"/ rowin() to check if indus index is present
+		if(!industriesMgr.signs.rawin(indus)) return; // industry not registered
+		local sign_id = industriesMgr.signs[indus];
 		if (sign_id!=null) GSSign.RemoveSign(sign_id);
 		trace(4,"Industry Deletion: "+indus);
 		industriesMgr.signs[indus]=null;
-		//industriesMgr.signs.remove(indus); //todo, check why it does not work...
 	}
 
 	/**
