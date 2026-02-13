@@ -2,6 +2,8 @@ class leaguetable
 {
     /**@var tables = array<'key':string, 'id':?GSLeagueTable, 'el':array<GSCompany> > */
     tables = []; // leaguetable table [ key , id , el ]
+    _orphaned_table_ids = []; // league table IDs found during crash recovery scan (sorted ascending)
+    _orphaned_element_ids = []; // league table element IDs found during crash recovery scan (sorted ascending)
 
     constructor()
     {
@@ -13,10 +15,89 @@ class leaguetable
         trace(4,"leaguetable::init");
         if (leaguetable.tables.len() > 0)
         {
-            leaguetable.reset(); // clean up any existing tables first (crash recovery)
+            leaguetable.reset(); // clean up any existing tables first
         }
+
+        // If orphaned table+element IDs were found during crash recovery,
+        // reclaim the entire data structure without removing/recreating anything.
+        if (leaguetable._orphaned_table_ids.len() > 0)
+        {
+            leaguetable.recoverFromCrash();
+            return;
+        }
+
+        // Normal (non-crash) initialization: create fresh tables and elements
         leaguetable.structure();
         leaguetable.createTables();
+    }
+
+    /**
+     * Recover league tables and elements after a crash.
+     * Reconstructs the script-side mapping by scanning engine-persisted IDs.
+     * Elements were created in deterministic order: for each table (town first,
+     * CF second), for each valid company in ascending order.
+     * No engine-side objects are removed or recreated — only the script mapping
+     * is rebuilt, then updateTables() will refresh values on the next cycle.
+     */
+    function recoverFromCrash()
+    {
+        trace(1, "leaguetable::recoverFromCrash — reclaiming " +
+              leaguetable._orphaned_table_ids.len() + " tables, " +
+              leaguetable._orphaned_element_ids.len() + " elements");
+
+        // Rebuild the structure template (defines key order: "town" then "CF")
+        leaguetable.structure();
+
+        // Assign orphaned table IDs to the structure entries by creation order
+        // (ascending IDs match creation order: index 0 = "town", index 1 = "CF")
+        local tidx = 0;
+        foreach (league in leaguetable.tables)
+        {
+            if (tidx < leaguetable._orphaned_table_ids.len())
+            {
+                league.id = leaguetable._orphaned_table_ids[tidx];
+                trace(1, "  Reclaimed table ID " + league.id + " for '" + league.key + "'");
+                tidx++;
+            }
+        }
+
+        // Reconstruct element-to-(table, company) mapping.
+        // Elements were created by createTables() in this order:
+        //   For each table (town, CF):
+        //     For c_id = COMPANY_FIRST to COMPANY_LAST:
+        //       if company was valid: NewElement() → sequential ID
+        // We replay this same iteration using the current valid companies
+        // (assumed unchanged since the crash) to assign element IDs.
+        local eidx = 0;
+        foreach (league in leaguetable.tables)
+        {
+            if (league.id == null) continue;
+            for (local c_id = GSCompany.COMPANY_FIRST; c_id < GSCompany.COMPANY_LAST; c_id++)
+            {
+                if (GSCompany.ResolveCompanyID(c_id) != GSCompany.COMPANY_INVALID)
+                {
+                    if (eidx < leaguetable._orphaned_element_ids.len())
+                    {
+                        league.el[c_id] = leaguetable._orphaned_element_ids[eidx];
+                        trace(1, "  Reclaimed element ID " + league.el[c_id] +
+                              " for table '" + league.key + "' company " + c_id);
+                        eidx++;
+                    }
+                }
+            }
+        }
+
+        if (eidx < leaguetable._orphaned_element_ids.len())
+        {
+            trace(1, "  Warning: " + (leaguetable._orphaned_element_ids.len() - eidx) +
+                  " orphaned elements could not be mapped (extra elements from deleted companies?)");
+        }
+
+        // Clear recovery data
+        leaguetable._orphaned_table_ids = [];
+        leaguetable._orphaned_element_ids = [];
+
+        trace(1, "  League table recovery complete. Values will refresh on next update cycle.");
     }
 
     /**
@@ -45,10 +126,6 @@ class leaguetable
                     }
                 }
                 league.el <- array(GSCompany.COMPANY_LAST); // fresh empty array of companies
-                if(dropleague)
-                {
-                    GSLeagueTable.Remove(league.id); // remove the engine-side league table object
-                }
             }
             if(dropleague) league.id <- null;
         }

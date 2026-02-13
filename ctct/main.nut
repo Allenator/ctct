@@ -419,18 +419,30 @@ function MainClass::cleanupEngineState()
 	}
 	trace(1, "  Town name suffixes stripped.");
 
-	// 4. Reset league tables (remove orphaned engine-side league table objects)
-	//    First use ltable_m.reset() which now calls GSLeagueTable.Remove() for known tables.
-	ltable_m.reset();
-	//    Then brute-force scan for any orphaned league tables the script lost track of.
-	for (local i = 0; i < 100; i++)
+	// 4. Recover orphaned league tables and elements
+	//    GSLeagueTable has no Remove/Delete API — tables persist forever once created.
+	//    Strategy: scan for existing table IDs and element IDs (ascending order preserves
+	//    creation order), then reclaim the entire data structure in ltable_m.init()
+	//    without removing or recreating anything.
+	ltable_m._orphaned_table_ids = [];
+	ltable_m._orphaned_element_ids = [];
+	for (local i = 0; i < 64; i++)
 	{
 		if (GSLeagueTable.IsValidLeagueTable(i))
 		{
-			GSLeagueTable.Remove(i);
+			ltable_m._orphaned_table_ids.append(i);
+			trace(1, "  Found orphaned league table ID " + i);
 		}
 	}
-	trace(1, "  League tables cleaned.");
+	for (local i = 0; i < 256; i++)
+	{
+		if (GSLeagueTable.IsValidLeagueTableElement(i))
+		{
+			ltable_m._orphaned_element_ids.append(i);
+			trace(1, "  Found orphaned league table element ID " + i);
+		}
+	}
+	trace(1, "  League tables scanned: " + ltable_m._orphaned_table_ids.len() + " tables, " + ltable_m._orphaned_element_ids.len() + " elements found for reclamation.");
 
 	// 5. Drain accumulated GSCargoMonitor data to prevent population explosion.
 	//    While the script was dead, cargo deliveries accumulated in the engine-side monitor.
