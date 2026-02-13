@@ -112,8 +112,8 @@ class leaguetable
         }
 
         // Clear recovery data
-        leaguetable._orphaned_table_ids = [];
-        leaguetable._orphaned_element_ids = [];
+        leaguetable._orphaned_table_ids <- [];
+        leaguetable._orphaned_element_ids <- [];
 
         trace(1, "  League table recovery complete. Values will refresh on next update cycle.");
     }

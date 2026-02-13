@@ -424,8 +424,8 @@ function MainClass::cleanupEngineState()
 	//    Strategy: scan for existing table IDs and element IDs (ascending order preserves
 	//    creation order), then reclaim the entire data structure in ltable_m.init()
 	//    without removing or recreating anything.
-	ltable_m._orphaned_table_ids = [];
-	ltable_m._orphaned_element_ids = [];
+	ltable_m._orphaned_table_ids <- [];
+	ltable_m._orphaned_element_ids <- [];
 	for (local i = 0; i < 64; i++)
 	{
 		if (GSLeagueTable.IsValidLeagueTable(i))
