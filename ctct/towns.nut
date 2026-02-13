@@ -340,7 +340,12 @@ function MakeTownGrowth(town,impact)
 	if(impact>inhab)
 	{ /* croissance */
 		local habparmaison = (towns._avg_habparmaison + inhab/maisonact.tofloat())/2; // moyene hab/maison de la ville et de la carte complete
-		local need_maison=(impact-inhab)/habparmaison;
+
+		// Apply convergence factor: only aim to close a fraction of the gap per month
+		// This prevents overshoot when the gap is large and the cap fluctuates.
+		local convergence_pct = GSController.GetSetting("Convergence");
+		local effective_gap = (impact - inhab) * convergence_pct / 100.0;
+		local need_maison=(effective_gap)/habparmaison;
 		need_maison=max(need_maison.tointeger(),1); // nombre de maisons manquantes
 
 		local vtss0=40.0/need_maison; // nombre de construction par mois. :a 80% - comme si on avait 40 jours par mois.
@@ -349,16 +354,19 @@ function MakeTownGrowth(town,impact)
 		if(vtss>40) vtss=40; // very slow
 
 		GSTown.SetGrowthRate(town,vtss); //vtss = Set the amount of days between town growth
-		towns._traces <- towns._traces + "  Require "+(impact-inhab)+" inhab ("+need_maison+" houses), growthRate set to a new house every "+vtss+" day(s)";
+		towns._traces <- towns._traces + "  Require "+(impact-inhab)+" inhab (conv "+convergence_pct+"%: "+need_maison+" houses), growthRate set to a new house every "+vtss+" day(s)";
 		trace(4,towns._traces);
 
 		local boost_pct = GSController.GetSetting("Power_boost");
 		if(vtss<3 && need_maison> 6 && boost_pct > 0)
 		{
-			local newmaison=need_maison * boost_pct / 100.0;
+			// Subtract what the engine will build this month to avoid double-counting
+			local engine_monthly = (30.0 / vtss).tointeger();
+			local boost_base = max(0, need_maison - engine_monthly);
+			local newmaison = boost_base * boost_pct / 100.0;
 			newmaison=max(1,newmaison.tointeger());
 			GSTown.ExpandTown(town,newmaison);
-			trace(4,"Need a power boost ("+boost_pct+"%), immediate building of "+newmaison+" house. inhab/house:"+habparmaison);
+			trace(4,"Need a power boost ("+boost_pct+"%), immediate building of "+newmaison+" house (engine will build ~"+engine_monthly+"). inhab/house:"+habparmaison);
 		}
 		return GSText(GSText.STR_TOWN_GROW,impact);
 	}

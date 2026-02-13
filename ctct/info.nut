@@ -94,11 +94,19 @@ class FMainClass extends GSInfo {
 
 		AddSetting({
 			name = "Power_boost",
-			description = "Option: Power boost percentage (instant house building when growth is fast)",
+			description = "Option: Power boost percentage during rapid growth",
 			easy_value = 33, medium_value = 33, hard_value = 33, custom_value = 33,
 			flags = CONFIG_INGAME,
 			min_value = 0, max_value = 100});
 		AddLabels("Power_boost", {_0 = "Disabled", _33 = "33% (default)", _50 = "50%", _100 = "100%"});
+
+		AddSetting({
+			name = "Convergence",
+			description = "Option: Growth convergence rate (% of gap to close per month)",
+			easy_value = 60, medium_value = 60, hard_value = 60, custom_value = 60,
+			flags = CONFIG_INGAME,
+			min_value = 20, max_value = 100});
+		AddLabels("Convergence", {_20 = "20% (very smooth)", _40 = "40% (smooth)", _60 = "60% (default)", _80 = "80% (aggressive)", _100 = "100% (original)"});
 
 		AddSetting({
 			name = "industry_signs",
