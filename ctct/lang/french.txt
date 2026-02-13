@@ -36,9 +36,9 @@ STR_LEAGUE_CF_BOTTOM : Mis à jour trimestriellement
 
 
 STR_TOWN_GROW	:{GREEN}En croissance. {BLACK}Maintenez les arrivages pour avoir {ORANGE}{NUM}{BLACK} hab.
-STR_TOWN_BOOST	:{GREEN}En croissance vers {ORANGE}{NUM}{BLACK} hab. {YELLOW}⚡ Boost : {WHITE}{NUM}{YELLOW} maisons construites instantanément.
+STR_TOWN_BOOST	:{GREEN}En croissance rapide vers {ORANGE}{NUM}{BLACK} hab.
 STR_TOWN_NOGROW	:{BLACK}Ces arrivages ne correspondent qu'à une ville de {RED}{NUM}{BROWN} hab.
-STR_TOWN_DISABLED	:{RED}La croissance des villes est désactivée dans les paramètres du jeu.
+STR_TOWN_DISABLED	:{RED}Croissance désactivée. {BLACK}Plafonnée à {GRAY}{NUM}{LTBROWN} hab.
 
 STR_GOAL_GROW	:Avoir {WHITE}{NUM}{ORANGE} ville{P "" s} dépassant {WHITE}{COMMA}{ORANGE} habitants pour débloquer : {WHITE}{CARGO_LIST}{ORANGE}.
 

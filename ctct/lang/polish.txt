@@ -27,9 +27,9 @@ STR_BONUS15	:{YELLOW}Bonus {GREEN}15/{NUM}{BLACK} ładunki dostarczone!
 STR_BONUS16	:{YELLOW}Bonus {GREEN}16/{NUM}{BLACK} ładunki dostarczone!
 
 STR_TOWN_GROW	:{GREEN}Rosnący do {ORANGE}{NUM}{BLACK} mieszk.
-STR_TOWN_BOOST	:{GREEN}Rosnący do {ORANGE}{NUM}{BLACK} mieszk. {YELLOW}⚡ Doładowanie: {WHITE}{NUM}{YELLOW} domów zbudowanych natychmiast.
+STR_TOWN_BOOST	:{GREEN}Szybko rośnie do {ORANGE}{NUM}{BLACK} mieszk.
 STR_TOWN_NOGROW	:{BLACK}Ograniczone do {RED}{NUM}{LTBROWN} mieszk.
-STR_TOWN_DISABLED	:{RED}Wzrost miast jest wyłączony w ustawieniach gry.
+STR_TOWN_DISABLED	:{RED}Wzrost wyłączony. {BLACK}Ograniczone do {GRAY}{NUM}{LTBROWN} mieszk.
 
 STR_NEW_CARGO_AVAIL :{BLACK}Mamy {RED}{NUM}{BLACK} miasto{P "" a}, które przekraczają {RED}{COMMA}{BLACK} mieszkańców.{}Od następnego miesiąca {RED}{CARGO_LIST}{BLACK} będzie brany pod uwagę w wzroście miasta.
 
