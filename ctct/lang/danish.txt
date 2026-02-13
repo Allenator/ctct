@@ -27,9 +27,7 @@ STR_BONUS15	:{YELLOW}Bonus {GREEN}15/{NUM}{BLACK} fragter leveret!
 STR_BONUS16	:{YELLOW}Bonus {GREEN}16/{NUM}{BLACK} fragter leveret!
 
 STR_TOWN_GROW	:{GREEN}Vokser til {ORANGE}{NUM}{BLACK} indb.
-STR_TOWN_BOOST	:{GREEN}Vokser hurtigt til {ORANGE}{NUM}{BLACK} indb.
 STR_TOWN_NOGROW	:{BLACK}Er begrænset til {RED}{NUM}{LTBROWN} indb.
-STR_TOWN_DISABLED	:{RED}Vækst deaktiveret. {BLACK}Begrænset til {GRAY}{NUM}{LTBROWN} indb.
 
 STR_NEW_CARGO_AVAIL :{BLACK}Vi har {RED}{NUM}{BLACK} by{P "" er}, der overstiger {RED}{COMMA}{BLACK} indbyggere.{}Fra næste måned vil {RED}{CARGO_LIST}{BLACK} blive taget i betragtning i byens vækst.
 
@@ -64,4 +62,7 @@ STR_LEAGUE_CF_BOTTOM : Opdateres kvartalsvis
 STR_PERFECTBONUS : {WHITE} Fuldt ud bonus! {BLACK}
 STR_CARGO_UNLOCKED : Information{}{}Fragt {ORANGE}{CARGO_LIST}{BLACK} er nu låst op.{}Lever denne fragt for at lade din by vokse.
 STR_WINNER : {ORANGE}Spillet er slut{BLACK}{}{}Virksomheden {WHITE}{COMPANY}{BLACK} vandt spillet med byen {ORANGE}{TOWN}{BLACK} og {COMMA} indbyggere.{}{}Tillykke!
+
+STR_TOWN_BOOST	:{GREEN}Vokser hurtigt til {ORANGE}{NUM}{BLACK} indb.
+STR_TOWN_DISABLED	:{RED}Vækst deaktiveret. {BLACK}Begrænset til {GRAY}{NUM}{LTBROWN} indb.
 

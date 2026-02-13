@@ -29,9 +29,7 @@ STR_BONUS15	:{YELLOW}Bonus {GREEN}15/{NUM}{BLACK} cargos delivered!
 STR_BONUS16	:{YELLOW}Bonus {GREEN}16/{NUM}{BLACK} cargos delivered!
 
 STR_TOWN_GROW	:{GREEN}Is growing up to {ORANGE}{NUM}{BLACK} inhab.
-STR_TOWN_BOOST	:{GREEN}Is rapidly growing up to {ORANGE}{NUM}{BLACK} inhab.
 STR_TOWN_NOGROW	:{BLACK}Is capped at {RED}{NUM}{LTBROWN} inhab.
-STR_TOWN_DISABLED	:{RED}Growth disabled. {BLACK}Is capped at {GRAY}{NUM}{LTBROWN} inhab.
 
 STR_NEW_CARGO_AVAIL :{BLACK}We have {RED}{NUM}{BLACK} town{P "" s} exceeding {RED}{COMMA}{BLACK} inhabitants.{}Starting next month, {RED}{CARGO_LIST}{BLACK} will be considered in town growth.
 
@@ -66,6 +64,9 @@ STR_LEAGUE_CF_BOTTOM : Updated quarterly
 
 STR_CARGO_UNLOCKED : Information{}{}The {ORANGE}{CARGO_LIST}{BLACK} cargo is now unlocked.{}Deliver this cargo to make your town grow.
 STR_WINNER : {ORANGE}The game is over{BLACK}{}{}The company {WHITE}{COMPANY}{BLACK} won the game with the town {ORANGE}{TOWN}{BLACK} and its {COMMA} inhabitants.{}{}Congratulations!
+
+STR_TOWN_BOOST	:{GREEN}Is rapidly growing up to {ORANGE}{NUM}{BLACK} inhab.
+STR_TOWN_DISABLED	:{RED}Growth disabled. {BLACK}Is capped at {GRAY}{NUM}{LTBROWN} inhab.
 
 # ========  this line is for testing purpose, no need to translate it, you can copy it like that.  ========
 

@@ -36,9 +36,7 @@ STR_LEAGUE_CF_BOTTOM : Mis à jour trimestriellement
 
 
 STR_TOWN_GROW	:{GREEN}En croissance. {BLACK}Maintenez les arrivages pour avoir {ORANGE}{NUM}{BLACK} hab.
-STR_TOWN_BOOST	:{GREEN}En croissance rapide vers {ORANGE}{NUM}{BLACK} hab.
 STR_TOWN_NOGROW	:{BLACK}Ces arrivages ne correspondent qu'à une ville de {RED}{NUM}{BROWN} hab.
-STR_TOWN_DISABLED	:{RED}Croissance désactivée. {BLACK}Plafonnée à {GRAY}{NUM}{LTBROWN} hab.
 
 STR_GOAL_GROW	:Avoir {WHITE}{NUM}{ORANGE} ville{P "" s} dépassant {WHITE}{COMMA}{ORANGE} habitants pour débloquer : {WHITE}{CARGO_LIST}{ORANGE}.
 
@@ -58,4 +56,7 @@ STR_CLAIMMODE_COMPETITION : {YELLOW}{COMPANY}{ORANGE} mène la competition avec 
 STR_LEAGUE_NAME_TOWN : Classement des villes
 STR_CARGO_UNLOCKED : Information{}{}Le cargo {ORANGE}{CARGO_LIST}{BLACK} est maintenant débloqué.{}Livrez ce cargo pour faire croître votre ville.
 STR_WINNER : {ORANGE}La partie est terminée{BLACK}{}{}La compagnie {WHITE}{COMPANY}{BLACK} a gagné la partie avec la ville {ORANGE}{TOWN}{BLACK} et {COMMA} habitants.{}{}Félicitations !
+
+STR_TOWN_BOOST	:{GREEN}En croissance rapide vers {ORANGE}{NUM}{BLACK} hab.
+STR_TOWN_DISABLED	:{RED}Croissance désactivée. {BLACK}Plafonnée à {GRAY}{NUM}{LTBROWN} hab.
 

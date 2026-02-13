@@ -27,9 +27,7 @@ STR_BONUS15	:{YELLOW}Bonus {GREEN}15/{NUM}{BLACK} cargas entregadas!
 STR_BONUS16	:{YELLOW}Bonus {GREEN}16/{NUM}{BLACK} cargas entregadas!
 
 STR_TOWN_GROW	:{GREEN}Está creciendo hasta {ORANGE}{NUM}{BLACK} hab.
-STR_TOWN_BOOST	:{GREEN}Está creciendo rápidamente hasta {ORANGE}{NUM}{BLACK} hab.
 STR_TOWN_NOGROW	:{BLACK}Está limitado a {RED}{NUM}{LTBROWN} hab.
-STR_TOWN_DISABLED	:{RED}Crecimiento desactivado. {BLACK}Limitado a {GRAY}{NUM}{LTBROWN} hab.
 
 STR_NEW_CARGO_AVAIL :{BLACK}Tenemos {RED}{NUM}{BLACK} ciudad{P "" s} que exceden {RED}{COMMA}{BLACK} habitantes.{}A partir del próximo mes, {RED}{CARGO_LIST}{BLACK} se tendrá en cuenta en el crecimiento de la ciudad.
 
@@ -64,4 +62,7 @@ STR_LEAGUE_CF_BOTTOM : Actualizado trimestralmente
 STR_PERFECTBONUS : {WHITE} ¡Bonus a toda velocidad! {BLACK}
 STR_CARGO_UNLOCKED : Información{}{}La carga {ORANGE}{CARGO_LIST}{BLACK} ahora está desbloqueada.{}Entrega esta carga para hacer crecer tu ciudad.
 STR_WINNER : {ORANGE}El juego ha terminado{BLACK}{}{}La compañía {WHITE}{COMPANY}{BLACK} ganó el juego con la ciudad {ORANGE}{TOWN}{BLACK} y {COMMA} habitantes.{}{}¡Felicidades!
+
+STR_TOWN_BOOST	:{GREEN}Está creciendo rápidamente hasta {ORANGE}{NUM}{BLACK} hab.
+STR_TOWN_DISABLED	:{RED}Crecimiento desactivado. {BLACK}Limitado a {GRAY}{NUM}{LTBROWN} hab.
 

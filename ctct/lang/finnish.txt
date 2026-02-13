@@ -27,9 +27,7 @@ STR_BONUS15	:{YELLOW}Bonus {GREEN}15/{NUM}{BLACK} rahtia toimitettu!
 STR_BONUS16	:{YELLOW}Bonus {GREEN}16/{NUM}{BLACK} rahtia toimitettu!
 
 STR_TOWN_GROW	:{GREEN}Kasvaa {ORANGE}{NUM}{BLACK} asukkaaseen.
-STR_TOWN_BOOST	:{GREEN}Kasvaa nopeasti {ORANGE}{NUM}{BLACK} asukkaaseen.
 STR_TOWN_NOGROW	:{BLACK}On rajoitettu {RED}{NUM}{LTBROWN} asukkaaseen.
-STR_TOWN_DISABLED	:{RED}Kasvu poistettu käytöstä. {BLACK}Rajoitettu {GRAY}{NUM}{LTBROWN} as.
 
 STR_NEW_CARGO_AVAIL :{BLACK}Meillä on {RED}{NUM}{BLACK} kaupunki{P "" t}, joissa on yli {RED}{COMMA}{BLACK} asukasta.{}Alkaen ensi kuusta, {RED}{CARGO_LIST}{BLACK} otetaan huomioon kaupungin kasvussa.
 
@@ -64,3 +62,6 @@ STR_LEAGUE_CF_BOTTOM : Päivitetään neljännesvuosittain
 STR_PERFECTBONUS : {WHITE} Täysillä menoa bonus! {BLACK}
 STR_CARGO_UNLOCKED : Tietoa{}{}Rahti {ORANGE}{CARGO_LIST}{BLACK} on nyt avattu.{}Toimita tämä rahti kasvattaaksesi kaupunkiasi.
 STR_WINNER : {ORANGE}Peli on ohi{BLACK}{}{}Yhtiö {WHITE}{COMPANY}{BLACK} voitti pelin kaupungin {ORANGE}{TOWN}{BLACK} ja {COMMA} asukkaan kanssa.{}{}Onnittelut!
+
+STR_TOWN_BOOST	:{GREEN}Kasvaa nopeasti {ORANGE}{NUM}{BLACK} asukkaaseen.
+STR_TOWN_DISABLED	:{RED}Kasvu poistettu käytöstä. {BLACK}Rajoitettu {GRAY}{NUM}{LTBROWN} as.
