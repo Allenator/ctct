@@ -2,7 +2,7 @@
  * This file is part of MinimalGS, which is a GameScript for OpenTTD
  * Copyright (C) 2012-2013  Leif Linse
  *
- * MinimalGS is free software; you can redistribute it and/or modify it 
+ * MinimalGS is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the License
  *
@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with MinimalGS; If not, see <http://www.gnu.org/licenses/> or
- * write to the Free Software Foundation, Inc., 51 Franklin Street, 
+ * write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
@@ -40,7 +40,7 @@ stab_m <- stabilizer; // le stabilisateur
 cs_mgr <- CargoSet_Manager;
 ltable_m <- leaguetable; // gestionaire de league
 
-class MainClass extends GSController 
+class MainClass extends GSController
 {
 	_loaded_data = null;
 	_init_done = null;
@@ -68,7 +68,7 @@ function MainClass::Start()
 
 	// Second initialization step, expect map complete, at this point the company 0 does exists.
 	this.InitStep2(this._init_newgame);
-	
+
 	// Events Loop
 	local last_loop_date = GSDate.GetCurrentDate();
 	trace(4,"game type="+this.gameType);
@@ -109,7 +109,7 @@ function MainClass::Start()
 //		trace(1, "tick " + ticks_used);
 //		GSController.Sleep(max(1, 5 * 74 - ticks_used));
 	}
-	
+
 }
 
 /**
@@ -120,10 +120,10 @@ function MainClass::InitStep2(newgame)
 {
 	trace(4,"MainClass::InitStep2(newgame:" + newgame + ")");
 	if(newgame) stab_m.NewGame(); // enregistrement des maisons
-	
+
 	towns_m.Start(newgame); // lecture des vecteurs et 1er tour de calcul town
 	indus_m.Init();
-	
+
 	if(this.gameType==2 && def_m.extCargo.len()==0)
 	{
 		this.gameType = 3; // game type competitif mais sans objectif de companie
@@ -131,7 +131,7 @@ function MainClass::InitStep2(newgame)
 	}
 
 //	GSGoal.New(GSCompany.COMPANY_INVALID, GSText(GSText.STR_COLORS), GSGoal.GT_NONE, 0);
-	if(newgame) 
+	if(newgame)
 	{
 		local towngoal = towns_m.createGoals(); // creation des goals
 		comp_m.SetGoalVal(towngoal);
@@ -155,8 +155,9 @@ function MainClass::Init()
 		comp_m.compete_goal <-this._loaded_data["competegoal"];
 		stab_m._houses <- this._loaded_data["stab"];
 		ltable_m.tables <- this._loaded_data["tables"];
-	} else 
+	} else
 	{	// appelle de la partie init (qui fait l'objet de la sauvegarde par ailleurs)
+		this.detectAndCleanCrashState(); // check for crash recovery before creating new state
 		towns_m.NewGame();
 		ltable_m.init();
 	}
@@ -174,9 +175,9 @@ function MainClass::HandleEvents()
 		if (ev == null) return;
 
 		local ev_type = ev.GetEventType();
-		switch (ev_type) 
+		switch (ev_type)
 		{
-			case GSEvent.ET_COMPANY_NEW: 
+			case GSEvent.ET_COMPANY_NEW:
 				local company_event = GSEventCompanyNew.Convert(ev);
 				local company_id = company_event.GetCompanyID();
 				local year = GSDate.GetYear(GSDate.GetCurrentDate());
@@ -282,7 +283,7 @@ function MainClass::Save()
 		return this._loaded_data != null ? this._loaded_data : {};
 	}
 
-	return { 
+	return {
 		signes = indus_m.signs,      /* Industry Sign list */
 		etat = indus_m.etat,         /* Sign state (bool)  */
 		histo = towns_m._prevQty,    /* History of cargo/towns */
@@ -308,7 +309,7 @@ function MainClass::Load(version, tbl)
 	trace(4,"Loading data from savegame...");
 	this._loaded_data = {}
 	this._init_newgame=false;
-   	foreach(key, val in tbl) 
+   	foreach(key, val in tbl)
 	{
 	//	trace(4,"load:"+key);
 	//	trace(4,dump(val));
@@ -332,4 +333,84 @@ function MainClass::CheckInteraction()
 	}
 	this._interactions = Interactions;
 	this._interactions.proceed(this);
+}
+
+/*
+ * Detect if the game has prior engine-side state from a crashed script session.
+ * In a truly new game, no GSGoal objects exist yet.
+ * If goals exist but _loaded_data is null, this is a crash recovery scenario.
+ */
+function MainClass::detectAndCleanCrashState()
+{
+	local has_prior_state = false;
+	for (local i = 0; i < 100; i++)
+	{
+		if (GSGoal.IsValidGoal(i))
+		{
+			has_prior_state = true;
+			break;
+		}
+	}
+
+	if (has_prior_state)
+	{
+		this.cleanupEngineState();
+	}
+}
+
+/*
+ * Remove all orphaned engine-side objects left over from a crashed script session.
+ * This prevents duplicates when the script reinitializes on the "new game" path.
+ * Cleanup pattern based on the existing "repair" interaction (interactions.nut).
+ */
+function MainClass::cleanupEngineState()
+{
+	trace(1, "Crash recovery detected - cleaning up orphaned engine state...");
+
+	// 1. Remove all existing GSGoal entries (same pattern as interactions.nut "cg" action)
+	for (local i = 0; i < 100; i++)
+	{
+		if (GSGoal.IsValidGoal(i))
+		{
+			GSGoal.Remove(i);
+		}
+	}
+	trace(1, "  Goals cleaned.");
+
+	// 2. Remove script-created GSSign entries (industry signs and company claim signs)
+	//    Industry signs use format "(IndustryTypeName)" — see industry.nut:26
+	//    Company claim signs use format "[CompanyName]" — see companies.nut:151
+	//    We only remove signs matching these patterns to preserve scenario editor signs.
+	local signs = GSSignList();
+	foreach (signid, _ in signs)
+	{
+		if (GSSign.IsValidSign(signid))
+		{
+			local name = GSSign.GetName(signid);
+			if (name != null && name.len() > 2)
+			{
+				local first = name.slice(0, 1);
+				local last = name.slice(name.len() - 1);
+				if ((first == "(" && last == ")") || (first == "[" && last == "]"))
+				{
+					GSSign.RemoveSign(signid);
+				}
+			}
+		}
+	}
+	trace(1, "  Script signs cleaned.");
+
+	// 3. Reset all modified town names back to default
+	local all_towns = GSTownList();
+	foreach (townid, _ in all_towns)
+	{
+		GSTown.SetName(townid, null);
+	}
+	trace(1, "  Town names reset.");
+
+	// 4. Reset league tables (remove orphaned league table objects)
+	ltable_m.reset();
+	trace(1, "  League tables cleaned.");
+
+	trace(1, "Crash recovery cleanup complete.");
 }

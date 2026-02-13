@@ -11,6 +11,10 @@ class leaguetable
     function init()
     {
         trace(4,"leaguetable::init");
+        if (leaguetable.tables.len() > 0)
+        {
+            leaguetable.reset(); // clean up any existing tables first (crash recovery)
+        }
         leaguetable.structure();
         leaguetable.createTables();
     }
