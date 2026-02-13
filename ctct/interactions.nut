@@ -63,7 +63,7 @@ class Interactions
                     }
                 }
                 break;
-                
+
             case "reset_goals":
             case "rg":
                 trace(2,"RESET COMPANY GOALS");
@@ -197,7 +197,7 @@ class Interactions
                 case "us":
                 case "updatesettings":
                     trace(2,"UPDATE SETTINGS");
-                    stab_m.stab <- GSController.GetSetting("Stabilizer");
+                    stab_m.stab <- GSController.GetSetting("stabilizer");
                     Interactions.inst.gameType = GSController.GetSetting("Game_Type");
                     if(Interactions.inst.gameType==2) comp_m.checkHQ();
                     local nouv_etat = GSController.GetSetting("industry_signs");

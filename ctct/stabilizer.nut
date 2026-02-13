@@ -12,7 +12,7 @@
 	 */
 	function Init()
 	{
-		stabilizer.stab <- GSController.GetSetting("Stabilizer");
+		stabilizer.stab <- GSController.GetSetting("stabilizer");
 	}
 
 	/**
