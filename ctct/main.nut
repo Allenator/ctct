@@ -378,8 +378,8 @@ function MainClass::cleanupEngineState()
 	trace(1, "  Goals cleaned.");
 
 	// 2. Remove script-created GSSign entries (industry signs and company claim signs)
-	//    Industry signs use format "(IndustryTypeName)" — see industry.nut:26
-	//    Company claim signs use format "[CompanyName]" — see companies.nut:151
+	//    Industry signs use format "(IndustryTypeName)" - see industry.nut:26
+	//    Company claim signs use format "[CompanyName]" - see companies.nut:151
 	//    We only remove signs matching these patterns to preserve scenario editor signs.
 	local signs = GSSignList();
 	foreach (signid, _ in signs)
@@ -420,7 +420,7 @@ function MainClass::cleanupEngineState()
 	trace(1, "  Town name suffixes stripped.");
 
 	// 4. Recover orphaned league tables and elements
-	//    GSLeagueTable has no Remove/Delete API — tables persist forever once created.
+	//    GSLeagueTable has no Remove/Delete API - tables persist forever once created.
 	//    Strategy: scan for existing table IDs and element IDs (ascending order preserves
 	//    creation order), then reclaim the entire data structure in ltable_m.init()
 	//    without removing or recreating anything.

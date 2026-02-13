@@ -26,8 +26,8 @@ STR_BONUS14	:{YELLOW}Bonus {GREEN}14/{NUM}{BLACK} náklady dodány!
 STR_BONUS15	:{YELLOW}Bonus {GREEN}15/{NUM}{BLACK} náklady dodány!
 STR_BONUS16	:{YELLOW}Bonus {GREEN}16/{NUM}{BLACK} náklady dodány!
 
-STR_TOWN_GROW	:{GREEN}Roste na {ORANGE}{NUM}{BLACK} obyv.
-STR_TOWN_NOGROW	:{BLACK}Je omezeno na {RED}{NUM}{LTBROWN} obyv.
+STR_TOWN_GROW	:{GREEN}Roste na {ORANGE}{NUM}{LTBROWN} obyv
+STR_TOWN_NOGROW	:{BLACK}Je omezeno na {RED}{NUM}{LTBROWN} obyv
 
 STR_NEW_CARGO_AVAIL :{BLACK}Máme {RED}{NUM}{BLACK} město{P "" a}, která překračují {RED}{COMMA}{BLACK} obyvatel.{}Od příštího měsíce bude {RED}{CARGO_LIST}{BLACK} zohledněno v růstu města.
 
@@ -63,6 +63,6 @@ STR_PERFECTBONUS : {WHITE} Bonus na plný plyn! {BLACK}
 STR_CARGO_UNLOCKED : Informace{}{}Náklad {ORANGE}{CARGO_LIST}{BLACK} je nyní odemčen.{}Doručte tento náklad, aby vaše město rostlo.
 STR_WINNER : {ORANGE}Hra je u konce{BLACK}{}{}Společnost {WHITE}{COMPANY}{BLACK} vyhrála hru s městem {ORANGE}{TOWN}{BLACK} a {COMMA} obyvateli.{}{}Gratulujeme!
 
-STR_TOWN_BOOST	:{GREEN}Rychle roste na {ORANGE}{NUM}{BLACK} obyv.
-STR_TOWN_DISABLED	:{RED}Růst zakázán. {BLACK}Omezeno na {GRAY}{NUM}{LTBROWN} obyv.
+STR_TOWN_BOOST	:{GREEN}Rychle roste na {ORANGE}{NUM}{LTBROWN} obyv
+STR_TOWN_DISABLED	:{RED}Růst zakázán. {BLACK}Omezeno na {ORANGE}{NUM}{LTBROWN} obyv
 
