@@ -29,7 +29,9 @@ STR_BONUS15	:{YELLOW}Bonus {GREEN}15/{NUM}{BLACK} cargos delivered!
 STR_BONUS16	:{YELLOW}Bonus {GREEN}16/{NUM}{BLACK} cargos delivered!
 
 STR_TOWN_GROW	:{GREEN}Is growing up to {ORANGE}{NUM}{BLACK} inhab.
+STR_TOWN_BOOST	:{GREEN}Is growing up to {ORANGE}{NUM}{BLACK} inhab. {YELLOW}⚡ Power boost: {WHITE}{NUM}{YELLOW} houses built instantly.
 STR_TOWN_NOGROW	:{BLACK}Is capped at {RED}{NUM}{LTBROWN} inhab.
+STR_TOWN_DISABLED	:{RED}Town growth is disabled by game settings.
 
 STR_NEW_CARGO_AVAIL :{BLACK}We have {RED}{NUM}{BLACK} town{P "" s} exceeding {RED}{COMMA}{BLACK} inhabitants.{}Starting next month, {RED}{CARGO_LIST}{BLACK} will be considered in town growth.
 

@@ -327,14 +327,14 @@ function MakeTownGrowth(town,impact)
 	if(GSGameSettings.IsValid("economy.town_growth_rate") && GSGameSettings.GetValue("economy.town_growth_rate") == 0)
 	{
 		towns.townStalled(town);
-		return GSText(GSText.STR_TOWN_NOGROW,impact);
+		return GSText(GSText.STR_TOWN_DISABLED);
 	}
 
 	// JGRPP: respect per-town growth disable (economy.default_allow_town_growth = false)
 	if(GSGameSettings.IsValid("economy.default_allow_town_growth") && GSGameSettings.GetValue("economy.default_allow_town_growth") == 0)
 	{
 		towns.townStalled(town);
-		return GSText(GSText.STR_TOWN_NOGROW,impact);
+		return GSText(GSText.STR_TOWN_DISABLED);
 	}
 
 	if(impact>inhab)
@@ -367,6 +367,7 @@ function MakeTownGrowth(town,impact)
 			newmaison=max(1,newmaison.tointeger());
 			GSTown.ExpandTown(town,newmaison);
 			trace(4,"Need a power boost ("+boost_pct+"%), immediate building of "+newmaison+" house (engine will build ~"+engine_monthly+"). inhab/house:"+habparmaison);
+			return GSText(GSText.STR_TOWN_BOOST,impact,newmaison);
 		}
 		return GSText(GSText.STR_TOWN_GROW,impact);
 	}

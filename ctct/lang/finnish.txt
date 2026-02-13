@@ -27,7 +27,9 @@ STR_BONUS15	:{YELLOW}Bonus {GREEN}15/{NUM}{BLACK} rahtia toimitettu!
 STR_BONUS16	:{YELLOW}Bonus {GREEN}16/{NUM}{BLACK} rahtia toimitettu!
 
 STR_TOWN_GROW	:{GREEN}Kasvaa {ORANGE}{NUM}{BLACK} asukkaaseen.
+STR_TOWN_BOOST	:{GREEN}Kasvaa {ORANGE}{NUM}{BLACK} asukkaaseen. {YELLOW}⚡ Tehostus: {WHITE}{NUM}{YELLOW} taloa rakennettu välittömästi.
 STR_TOWN_NOGROW	:{BLACK}On rajoitettu {RED}{NUM}{LTBROWN} asukkaaseen.
+STR_TOWN_DISABLED	:{RED}Kaupungin kasvu on poistettu käytöstä peliasetuksissa.
 
 STR_NEW_CARGO_AVAIL :{BLACK}Meillä on {RED}{NUM}{BLACK} kaupunki{P "" t}, joissa on yli {RED}{COMMA}{BLACK} asukasta.{}Alkaen ensi kuusta, {RED}{CARGO_LIST}{BLACK} otetaan huomioon kaupungin kasvussa.
 

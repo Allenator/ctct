@@ -27,7 +27,9 @@ STR_BONUS15	:{YELLOW}Bônus {GREEN}15/{NUM}{BLACK} cargas entregues!
 STR_BONUS16	:{YELLOW}Bônus {GREEN}16/{NUM}{BLACK} cargas entregues!
 
 STR_TOWN_GROW	:{GREEN}Está crescendo até {ORANGE}{NUM}{BLACK} hab.
+STR_TOWN_BOOST	:{GREEN}Está crescendo até {ORANGE}{NUM}{BLACK} hab. {YELLOW}⚡ Impulso: {WHITE}{NUM}{YELLOW} casas construídas instantaneamente.
 STR_TOWN_NOGROW	:{BLACK}Está limitado a {RED}{NUM}{LTBROWN} hab.
+STR_TOWN_DISABLED	:{RED}O crescimento urbano está desativado nas configurações do jogo.
 
 STR_NEW_CARGO_AVAIL :{BLACK}Temos {RED}{NUM}{BLACK} cidade{P "" s} que excedem {RED}{COMMA}{BLACK} habitantes.{}A partir do próximo mês, {RED}{CARGO_LIST}{BLACK} será considerado no crescimento da cidade.
 

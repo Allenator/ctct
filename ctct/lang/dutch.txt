@@ -27,7 +27,9 @@ STR_BONUS15	:{YELLOW}Bonus {GREEN}15/{NUM}{BLACK} vrachten geleverd!
 STR_BONUS16	:{YELLOW}Bonus {GREEN}16/{NUM}{BLACK} vrachten geleverd!
 
 STR_TOWN_GROW	:{GREEN}Groeit tot {ORANGE}{NUM}{BLACK} inwoners.
+STR_TOWN_BOOST	:{GREEN}Groeit tot {ORANGE}{NUM}{BLACK} inwoners. {YELLOW}⚡ Power boost: {WHITE}{NUM}{YELLOW} huizen direct gebouwd.
 STR_TOWN_NOGROW	:{BLACK}Is beperkt tot {RED}{NUM}{LTBROWN} inwoners.
+STR_TOWN_DISABLED	:{RED}Stadsgroei is uitgeschakeld in de spelinstellingen.
 
 STR_NEW_CARGO_AVAIL :{BLACK}We hebben {RED}{NUM}{BLACK} stad{P "" s} die {RED}{COMMA}{BLACK} inwoners overschrijden.{}Vanaf volgende maand zal {RED}{CARGO_LIST}{BLACK} in aanmerking worden genomen voor de groei van de stad.
 
