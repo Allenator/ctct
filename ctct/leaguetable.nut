@@ -36,12 +36,12 @@ class leaguetable
      * Reconstructs the script-side mapping by scanning engine-persisted IDs.
      * Elements were created in deterministic order: for each table (town first,
      * CF second), for each valid company in ascending order.
-     * No engine-side objects are removed or recreated — only the script mapping
+     * No engine-side objects are removed or recreated - only the script mapping
      * is rebuilt, then updateTables() will refresh values on the next cycle.
      */
     function recoverFromCrash()
     {
-        trace(1, "leaguetable::recoverFromCrash — reclaiming " +
+        trace(1, "leaguetable::recoverFromCrash - reclaiming " +
               leaguetable._orphaned_table_ids.len() + " tables, " +
               leaguetable._orphaned_element_ids.len() + " elements");
 
