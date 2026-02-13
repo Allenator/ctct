@@ -45,6 +45,10 @@ class leaguetable
                     }
                 }
                 league.el <- array(GSCompany.COMPANY_LAST); // fresh empty array of companies
+                if(dropleague)
+                {
+                    GSLeagueTable.Remove(league.id); // remove the engine-side league table object
+                }
             }
             if(dropleague) league.id <- null;
         }

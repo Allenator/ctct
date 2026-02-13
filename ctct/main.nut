@@ -400,16 +400,36 @@ function MainClass::cleanupEngineState()
 	}
 	trace(1, "  Script signs cleaned.");
 
-	// 3. Reset all modified town names back to default
+	// 3. Strip company claim suffixes from town names (e.g., "Springfield [Player Transport]" → "Springfield")
+	//    Only removes trailing " [...]" patterns to preserve scenario editor custom names.
+	//    See companies.nut:144 where the suffix is appended.
 	local all_towns = GSTownList();
 	foreach (townid, _ in all_towns)
 	{
-		GSTown.SetName(townid, null);
+		local name = GSTown.GetName(townid);
+		if (name != null)
+		{
+			local bracket_start = name.find(" [");
+			if (bracket_start != null && name.slice(name.len() - 1) == "]")
+			{
+				local clean_name = name.slice(0, bracket_start);
+				GSTown.SetName(townid, clean_name);
+			}
+		}
 	}
-	trace(1, "  Town names reset.");
+	trace(1, "  Town name suffixes stripped.");
 
-	// 4. Reset league tables (remove orphaned league table objects)
+	// 4. Reset league tables (remove orphaned engine-side league table objects)
+	//    First use ltable_m.reset() which now calls GSLeagueTable.Remove() for known tables.
 	ltable_m.reset();
+	//    Then brute-force scan for any orphaned league tables the script lost track of.
+	for (local i = 0; i < 100; i++)
+	{
+		if (GSLeagueTable.IsValidLeagueTable(i))
+		{
+			GSLeagueTable.Remove(i);
+		}
+	}
 	trace(1, "  League tables cleaned.");
 
 	// 5. Drain accumulated GSCargoMonitor data to prevent population explosion.
