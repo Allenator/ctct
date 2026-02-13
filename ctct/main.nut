@@ -412,5 +412,21 @@ function MainClass::cleanupEngineState()
 	ltable_m.reset();
 	trace(1, "  League tables cleaned.");
 
+	// 5. Drain accumulated GSCargoMonitor data to prevent population explosion.
+	//    While the script was dead, cargo deliveries accumulated in the engine-side monitor.
+	//    Reading with clear=true resets the counters, discarding the stale backlog.
+	local all_cargos = GSCargoList();
+	for (local cid = GSCompany.COMPANY_FIRST; cid < GSCompany.COMPANY_LAST; cid++)
+	{
+		foreach (townid, _ in all_towns)
+		{
+			foreach (cargo, _ in all_cargos)
+			{
+				GSCargoMonitor.GetTownDeliveryAmount(cid, cargo, townid, true);
+			}
+		}
+	}
+	trace(1, "  Cargo monitors drained.");
+
 	trace(1, "Crash recovery cleanup complete.");
 }
