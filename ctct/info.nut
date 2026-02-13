@@ -2,7 +2,7 @@
  * This file is part of CTCT, which is a GameScript for OpenTTD
  * Copyright (C) 2012-2013  Leif Linse
  *
- * CTCT is free software; you can redistribute it and/or modify it 
+ * CTCT is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the License
  *
@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with CTCT; If not, see <http://www.gnu.org/licenses/> or
- * write to the Free Software Foundation, Inc., 51 Franklin Street, 
+ * write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
@@ -31,7 +31,7 @@ class FMainClass extends GSInfo {
 	function GetAPIVersion()	{ return "13"; }
 	function GetURL()			{ return "https://www.tt-forums.net/viewtopic.php?t=70224"; }
 
-	function GetSettings() 
+	function GetSettings()
 	{
 
 		AddSetting({name = "Game_Type",
@@ -47,23 +47,23 @@ class FMainClass extends GSInfo {
 
 
 		AddSetting(
-		{name = "log_level", 
-		 description = "Debug: Log level (higher = print more)", 
-		 easy_value = 1, medium_value = 1, hard_value = 1, custom_value = 1, 
-		 flags = CONFIG_INGAME, 
+		{name = "log_level",
+		 description = "Debug: Log level (higher = print more)",
+		 easy_value = 1, medium_value = 1, hard_value = 1, custom_value = 1,
+		 flags = CONFIG_INGAME,
 		 min_value = 1, max_value = 4}
 		 );
 		AddLabels("log_level", {_1 = "1: Info", _2 = "2: Details", _3 = "3: Cargo", _4 = "4: Verbose Debugging" } );
-		
+
 		AddSetting(
-		{name = "Difficulty_level", 
+		{name = "Difficulty_level",
 		 description = "Difficulty Level (Growing factor)",
-		 easy_value = 2, medium_value = 4, hard_value = 6, custom_value = 4, 
-		 flags = CONFIG_INGAME, 
+		 easy_value = 2, medium_value = 4, hard_value = 6, custom_value = 4,
+		 flags = CONFIG_INGAME,
 		 min_value = 1, max_value = 7}
 		 );
 		AddLabels("Difficulty_level", { _1 = "Very Easy", _2 = "Easy", _3 = "Slightly Easy", _4 = "Normal", _5 ="Slightly Hard",_6 = "Hard", _7 = "Very Hard" } );
-		
+
 		AddSetting(
 		{name = "Unlocking_speed",
 			description = "Difficulty Level (Step to unlock next cargo)",
@@ -93,9 +93,17 @@ class FMainClass extends GSInfo {
 
 
 		AddSetting({
-			name = "industry_signs", 
-			description = "Option: Display industry signs", 
-			easy_value = 0, medium_value = 0, hard_value = 0, custom_value = 0, 
+			name = "Power_boost",
+			description = "Option: Power boost percentage (instant house building when growth is fast)",
+			easy_value = 33, medium_value = 33, hard_value = 33, custom_value = 33,
+			flags = CONFIG_INGAME,
+			min_value = 0, max_value = 100});
+		AddLabels("Power_boost", {_0 = "Disabled", _33 = "33% (default)", _50 = "50%", _100 = "100%"});
+
+		AddSetting({
+			name = "industry_signs",
+			description = "Option: Display industry signs",
+			easy_value = 0, medium_value = 0, hard_value = 0, custom_value = 0,
 			flags = CONFIG_INGAME | CONFIG_BOOLEAN});
 
 		AddSetting({name = "owned_city_display",

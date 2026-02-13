@@ -322,6 +322,21 @@ function MakeTownGrowth(town,impact)
 {
 	local inhab = GSTown.GetPopulation(town);
 	local maisonact = GSTown.GetHouseCount(town); // nombre de maison actuellement dans cette ville
+
+	// Respect the game setting: if town growth is set to None, do not grow at all
+	if(GSGameSettings.IsValid("economy.town_growth_rate") && GSGameSettings.GetValue("economy.town_growth_rate") == 0)
+	{
+		towns.townStalled(town);
+		return GSText(GSText.STR_TOWN_NOGROW,impact);
+	}
+
+	// JGRPP: respect per-town growth disable (economy.default_allow_town_growth = false)
+	if(GSGameSettings.IsValid("economy.default_allow_town_growth") && GSGameSettings.GetValue("economy.default_allow_town_growth") == 0)
+	{
+		towns.townStalled(town);
+		return GSText(GSText.STR_TOWN_NOGROW,impact);
+	}
+
 	if(impact>inhab)
 	{ /* croissance */
 		local habparmaison = (towns._avg_habparmaison + inhab/maisonact.tofloat())/2; // moyene hab/maison de la ville et de la carte complete
@@ -337,12 +352,13 @@ function MakeTownGrowth(town,impact)
 		towns._traces <- towns._traces + "  Require "+(impact-inhab)+" inhab ("+need_maison+" houses), growthRate set to a new house every "+vtss+" day(s)";
 		trace(4,towns._traces);
 
-		if(vtss<3 && need_maison> 6)
+		local boost_pct = GSController.GetSetting("Power_boost");
+		if(vtss<3 && need_maison> 6 && boost_pct > 0)
 		{
-			local newmaison=need_maison*0.33; // do not build all houses at once, limit to 33%
+			local newmaison=need_maison * boost_pct / 100.0;
 			newmaison=max(1,newmaison.tointeger());
 			GSTown.ExpandTown(town,newmaison);
-			trace(4,"Need a power boost, immediate building of "+newmaison+" house. inhab/house:"+habparmaison);
+			trace(4,"Need a power boost ("+boost_pct+"%), immediate building of "+newmaison+" house. inhab/house:"+habparmaison);
 		}
 		return GSText(GSText.STR_TOWN_GROW,impact);
 	}
