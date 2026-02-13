@@ -2,6 +2,7 @@ class leaguetable
 {
     /**@var tables = array<'key':string, 'id':?GSLeagueTable, 'el':array<GSCompany> > */
     tables = []; // leaguetable table [ key , id , el ]
+    _orphaned_ids = []; // league table IDs found during crash recovery scan (sorted ascending)
 
     constructor()
     {
@@ -16,6 +17,24 @@ class leaguetable
             leaguetable.reset(); // clean up any existing tables first (crash recovery)
         }
         leaguetable.structure();
+        // If orphaned table IDs were found during crash recovery, reuse them
+        // instead of creating new ones (GSLeagueTable has no Remove/Delete API).
+        // IDs are stored in ascending order, matching the creation order:
+        // index 0 = "town" table, index 1 = "CF" table.
+        if (leaguetable._orphaned_ids.len() > 0)
+        {
+            local idx = 0;
+            foreach (league in leaguetable.tables)
+            {
+                if (idx < leaguetable._orphaned_ids.len())
+                {
+                    league.id = leaguetable._orphaned_ids[idx];
+                    trace(1, "leaguetable::init reusing orphaned table ID " + league.id + " for '" + league.key + "'");
+                    idx++;
+                }
+            }
+            leaguetable._orphaned_ids <- [];
+        }
         leaguetable.createTables();
     }
 
@@ -45,10 +64,6 @@ class leaguetable
                     }
                 }
                 league.el <- array(GSCompany.COMPANY_LAST); // fresh empty array of companies
-                if(dropleague)
-                {
-                    GSLeagueTable.Remove(league.id); // remove the engine-side league table object
-                }
             }
             if(dropleague) league.id <- null;
         }
