@@ -28,6 +28,24 @@ class leaguetable
 
         // Normal (non-crash) initialization: create fresh tables and elements
         leaguetable.structure();
+        // If orphaned table IDs were found during crash recovery, reuse them
+        // instead of creating new ones (GSLeagueTable has no Remove/Delete API).
+        // IDs are stored in ascending order, matching the creation order:
+        // index 0 = "town" table, index 1 = "CF" table.
+        if (leaguetable._orphaned_ids.len() > 0)
+        {
+            local idx = 0;
+            foreach (league in leaguetable.tables)
+            {
+                if (idx < leaguetable._orphaned_ids.len())
+                {
+                    league.id = leaguetable._orphaned_ids[idx];
+                    trace(1, "leaguetable::init reusing orphaned table ID " + league.id + " for '" + league.key + "'");
+                    idx++;
+                }
+            }
+            leaguetable._orphaned_ids <- [];
+        }
         leaguetable.createTables();
     }
 
